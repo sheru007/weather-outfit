@@ -1,11 +1,19 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { UserSettingContext } from './Contexts/UserSettings';
+import Headers from './Components/Header';
 import './App.css'
 
 function App() {
+  const [theme, setTheme] = useState('light');
 
-  return (<div>hii, it is weather app</div>
+  const toggleTheme = () => {
+    setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
+  };
+
+  return (<UserSettingContext.Provider value={{ theme, toggleTheme }}>
+    {/* header */}
+    <Headers />
+  </UserSettingContext.Provider>
   )
 }
 
