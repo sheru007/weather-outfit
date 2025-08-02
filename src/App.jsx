@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { UserSettingContext } from './Contexts/UserSettings';
 import Headers from './Components/Header';
+import Main from './Pages/Main';
 import './App.css'
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
   return (<UserSettingContext.Provider value={{ theme, toggleTheme }}>
     {/* header */}
     <Headers />
+    <Main />
   </UserSettingContext.Provider>
   )
 }
