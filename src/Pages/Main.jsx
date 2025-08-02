@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import SearchBar from '../Components/SearchBar';
 import InfoCard from '../Components/InfoCard';
-import { RECOMMENDATION } from '../constants'
+import { RECOMMENDATION, HISTORY_LIMIT } from '../constants'
 
 // we should not save key in url but just for assignment purpose, i am adding here.
 function Main() {
@@ -9,6 +9,7 @@ function Main() {
     const [location, setLocation] = useState('')
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("")
+    const [history, setHistory] = useState([])
 
     function fetchWeather() {
         setLoading(true)
@@ -27,8 +28,26 @@ function Main() {
         setLoading(false)
     }
 
+    const saveInHistory = (loc = '') => {
+        if (!loc) return;
+        //  if city is already 
+        let historyCopy = [...history]
+        if (historyCopy?.includes(loc)) {
+            historyCopy = history.filter(item => item !== loc)
+        }
+
+        if (historyCopy.length === HISTORY_LIMIT) {
+            const newArr = historyCopy.slice(1)
+            newArr.push(loc)
+            setHistory(newArr)
+        } else {
+            setHistory([...historyCopy, loc])
+        }
+    }
+
     const handleFetchWeather = () => {
         if (!location) return;
+        saveInHistory(location)
         fetchWeather()
     }
 
@@ -41,6 +60,21 @@ function Main() {
 
             {/* error message */}
             {error ? (<div className='text-red-500 text-base'>{error}</div>) : null}
+
+
+            {/* history card */}
+            {
+                history?.length > 0 && (<div className='w-full p-4 flex justify-start items-center gap-2'>
+                    <h4>History : </h4>
+                    {
+                        history?.map((item, index) => {
+                            return (
+                                <div key={index} className='bg-gray-300 px-2 py-1 rounded-md text-base font-bold'>{item}</div>
+                            )
+                        })
+                    }
+                </div>)
+            }
 
             {/* weather info */}
             {data?.current && data?.location && (<div className='flex justify-around items-start gap-2'>

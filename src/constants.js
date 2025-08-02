@@ -1,3 +1,5 @@
+export const HISTORY_LIMIT = 5;
+
 export const RECOMMENDATION = {
     "Sunny": [
         { value: "Take an umbrella" },
@@ -13,6 +15,14 @@ export const RECOMMENDATION = {
         { value: "Take Torch" }
     ],
     "Partly cloudy": [
+        { value: "Take an umbrella" },
+        { value: "Take Rain Coat" }
+    ],
+    "Partly Cloudy": [
+        { value: "Take an umbrella" },
+        { value: "Take Rain Coat" }
+    ],
+    "Patchy rain nearby" : [
         { value: "Take an umbrella" },
         { value: "Take Rain Coat" }
     ],
